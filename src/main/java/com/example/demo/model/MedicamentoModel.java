@@ -6,11 +6,11 @@ public class MedicamentoModel {
 	private int id;
     private String nombre;
     private String descripcion;
-    private char receta;
+    private String receta;
     private float precio;
     private int stock;
     
-	public MedicamentoModel(int id, String nombre, String descripcion, char receta, float precio, int stock) {
+	public MedicamentoModel(int id, String nombre, String descripcion, String receta, float precio, int stock) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -48,14 +48,17 @@ public class MedicamentoModel {
 		this.descripcion = descripcion;
 	}
 
-	public char getReceta() {
+	public String getReceta() {
 		return receta;
 	}
 
-	public void setReceta(char receta) {
-		this.receta = receta;
-	}
-
+	public void setReceta(String receta) {
+        if (recetaValida(receta)) {
+            this.receta = receta;
+        } else {
+            throw new IllegalArgumentException("Valor de receta no válido");
+        }
+    }
 	public float getPrecio() {
 		return precio;
 	}
@@ -78,6 +81,9 @@ public class MedicamentoModel {
 				+ receta + ", precio=" + precio + ", stock=" + stock + "]";
 	}
     
+	 private boolean recetaValida(String receta) {
+	        return receta != null && (receta.equals("s") || receta.equals("n"));
+	    }
     
 
 }
