@@ -8,26 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "paciente")
-public class Paciente {
+@Table(name = "administrador")
+public class Administrador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "nombre", length = 30)
-    private String nombre;
-
-    @Column(name = "apellidos", length = 50)
-    private String apellidos;
-
-    @Column(name = "edad")
-    private int edad;
-
-    @Column(name = "direccion", length = 100)
-    private String direccion;
-
-    @Column(name = "foto", length = 100)
-    private String foto;
 
     @Column(name = "username", length = 30)
     private String username;
