@@ -40,4 +40,8 @@ public class Medico {
     @ManyToOne
     @JoinColumn(name = "idEspecialidad")
     private Especialidad especialidad;
+
+	public void setPassword(String encode) {
+		
+	}
 }

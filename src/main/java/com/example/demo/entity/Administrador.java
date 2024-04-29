@@ -20,4 +20,8 @@ public class Administrador {
 
     @Column(name = "password", length = 30)
     private String password;
+
+	public void setPassword(String encode) {
+		
+	}
 }

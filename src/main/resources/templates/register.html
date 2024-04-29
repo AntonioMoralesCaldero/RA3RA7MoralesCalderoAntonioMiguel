@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+</head>
+<body>
+    <h2>Registrarse</h2>
+    <form action="/auth/register" method="post">
+        <label for="paciente-username">Usuario (Paciente):</label>
+        <input type="text" id="paciente-username" name="username" required>
+        <br>
+        <label for="paciente-password">Contraseña:</label>
+        <input type="password" id="paciente-password" name="password" required>
+        <br>
+        <button type="submit">Registrarse como Paciente</button>
+    </form>
+</body>
+</html>
