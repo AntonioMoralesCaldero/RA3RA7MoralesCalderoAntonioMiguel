@@ -4,12 +4,18 @@ import com.example.demo.entity.Paciente;
 import com.example.demo.model.PacienteModel;
 import com.example.demo.repository.PacienteRepository;
 import com.example.demo.service.PacienteService;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("pacienteService")
 public class PacienteServiceImpl implements PacienteService {
@@ -29,13 +35,17 @@ public class PacienteServiceImpl implements PacienteService {
     public PacienteModel registrar(PacienteModel pacienteModel) {
         Paciente paciente = modelMapper.map(pacienteModel, Paciente.class);
         paciente.setPassword(passwordEncoder.encode(paciente.getPassword()));
+        paciente.setFoto(pacienteModel.getFotoFilename()); // Guarda solo el nombre del archivo
         Paciente savedPaciente = pacienteRepository.save(paciente);
         return modelMapper.map(savedPaciente, PacienteModel.class);
     }
+
     
     @Override
     public boolean authenticate(String username, String password) {
         Paciente paciente = pacienteRepository.findByUsername(username);
         return paciente != null && passwordEncoder.matches(password, paciente.getPassword());
     }
+    
+
 }

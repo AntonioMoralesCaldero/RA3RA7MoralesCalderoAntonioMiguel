@@ -6,13 +6,50 @@
     <title>Authenticated User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { padding-top: 20px; }
-        .navbar-custom { background-color: #333; }
+        body { 
+            background-color: #f4f4f4; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom { 
+            background-color: #004085; /* Dark blue */
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+            color: #fff !important;
+        }
+        .navbar-custom .nav-link:hover {
+            background-color: #002752 !important;
+        }
+        .navbar-custom .dropdown-menu {
+            background-color: #004085;
+            border: none;
+        }
+        .navbar-custom .dropdown-item {
+            color: #fff;
+        }
+        .navbar-custom .dropdown-item:hover {
+            background-color: #002752;
+        }
+        .navbar-custom .dropdown-divider {
+            border-top-color: #fff;
+        }
+        .container h1 {
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+            background-color: #004085;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="#">Centro Médico</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +73,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" th:href="@{/auth/logout}">Logout</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -47,6 +84,10 @@
 <div class="container mt-5">
     <h1>Welcome, <span th:text="${username}">User</span>!</h1>
     <p>This is your user dashboard. Here you can manage your profile, check updates, and more.</p>
+</div>
+
+<div class="footer">
+    <p>Centro Médico © 2024. All Rights Reserved.</p>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

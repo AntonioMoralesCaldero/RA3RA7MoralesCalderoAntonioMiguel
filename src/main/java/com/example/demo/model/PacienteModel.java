@@ -1,107 +1,113 @@
 //Autor: Antonio Miguel Morales Caldero
 package com.example.demo.model;
 
+import org.springframework.web.multipart.MultipartFile;
 
 public class PacienteModel {
-	
+    
     private int id;
     private String nombre;
     private String apellidos;
     private int edad;
     private String direccion;
-    private String foto;
+    private MultipartFile foto;  // Usado para cargar la foto
+    private String fotoFilename; // Usado para guardar el nombre del archivo en la base de datos
     private String username;
     private String password;
     
-    public PacienteModel(int id, String nombre, String apellidos, int edad, String direccion, String foto,
-			String username, String password) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.edad = edad;
-		this.direccion = direccion;
-		this.foto = foto;
-		this.username = username;
-		this.password = password;
-	}
-
-	public PacienteModel() {
-    	
+    public PacienteModel(int id, String nombre, String apellidos, int edad, String direccion, MultipartFile foto,
+            String username, String password) {
+        super();
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.edad = edad;
+        this.direccion = direccion;
+        this.foto = foto;
+        this.username = username;
+        this.password = password;
     }
 
-	public int getId() {
-		return id;
-	}
+    public PacienteModel() {
+        
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getApellidos() {
-		return apellidos;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+    public String getApellidos() {
+        return apellidos;
+    }
 
-	public int getEdad() {
-		return edad;
-	}
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
+    public int getEdad() {
+        return edad;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public String getFoto() {
-		return foto;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+    public MultipartFile getFoto() {
+        return foto;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setFoto(MultipartFile foto) {
+        this.foto = foto;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getFotoFilename() {
+        return fotoFilename;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setFotoFilename(String fotoFilename) {
+        this.fotoFilename = fotoFilename;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	@Override
-	public String toString() {
-		return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
-				+ ", direccion=" + direccion + ", foto=" + foto + ", username=" + username + ", password=" + password
-				+ "]";
-	}
-	
-	
-    
-    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
+                + ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username=" + username + ", password=" + password
+                + "]";
+    }
 }
