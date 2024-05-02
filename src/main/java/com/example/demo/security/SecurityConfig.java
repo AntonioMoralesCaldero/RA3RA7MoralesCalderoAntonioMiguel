@@ -1,63 +1,54 @@
 package com.example.demo.security;
 
-import java.io.IOException;
-import java.util.Set;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/auth/login", "/auth/register", "/confirm").permitAll()
-				.requestMatchers("/perfil").hasAnyAuthority("ROL_MEDICO", "ROL_PACIENTE")
-				.anyRequest().authenticated())
-				.formLogin((form) -> form
-						.loginPage("/auth/login").successHandler(new AuthenticationSuccessHandler() {
-							@Override
-							public void onAuthenticationSuccess(HttpServletRequest request,
-									HttpServletResponse response, Authentication authentication)
-									throws IOException, ServletException {
-								Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-								if (roles.contains("ROL_MEDICO")) {
-									response.sendRedirect("/perfil");
-								} else if (roles.contains("ROL_PACIENTE")) {
-									response.sendRedirect("/perfil");
-								}
-							}
-						}).permitAll())
-				.logout((logout) -> logout.permitAll().logoutUrl("/logout").logoutSuccessUrl("/auth/login"));
 
-		return http.build();
-	}
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-			throws Exception {
-		return authenticationConfiguration.getAuthenticationManager();
-	}
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/auth/login", "/auth/register").permitAll()
+                .anyRequest().authenticated())
+            .formLogin(form -> form
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/auth/login")
+                .defaultSuccessUrl("/perfil", true)
+                .failureUrl("/auth/login?error=true")
+                .permitAll())
+            .logout(logout -> logout
+                .logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/auth/login?logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll());
+
+        return http.build();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
 }

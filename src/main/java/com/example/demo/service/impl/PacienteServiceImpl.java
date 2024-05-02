@@ -16,35 +16,26 @@ public class PacienteServiceImpl implements PacienteService {
 
     private final PacienteRepository pacienteRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
-    
     @Autowired
-    public PacienteServiceImpl(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder) {
+    public PacienteServiceImpl(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.pacienteRepository = pacienteRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public PacienteModel registrar(PacienteModel pacienteModel) {
-        Paciente paciente = convertToEntity(pacienteModel);
-
-        // Codificar la contraseña antes de guardarla
+        Paciente paciente = modelMapper.map(pacienteModel, Paciente.class);
         paciente.setPassword(passwordEncoder.encode(paciente.getPassword()));
-
-        // Guardar el paciente en la base de datos
-        Paciente pacienteGuardado = pacienteRepository.save(paciente);
-
-        return convertToModel(pacienteGuardado);
-    }
-
-    private Paciente convertToEntity(PacienteModel pacienteModel) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(pacienteModel, Paciente.class);
-    }
-
-    private PacienteModel convertToModel(Paciente paciente) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(paciente, PacienteModel.class);
+        Paciente savedPaciente = pacienteRepository.save(paciente);
+        return modelMapper.map(savedPaciente, PacienteModel.class);
     }
     
+    @Override
+    public boolean authenticate(String username, String password) {
+        Paciente paciente = pacienteRepository.findByUsername(username);
+        return paciente != null && passwordEncoder.matches(password, paciente.getPassword());
+    }
 }

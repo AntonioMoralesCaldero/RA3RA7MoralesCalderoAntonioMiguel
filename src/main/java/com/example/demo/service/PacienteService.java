@@ -4,4 +4,6 @@ import com.example.demo.model.PacienteModel;
 
 public interface PacienteService {
     PacienteModel registrar(PacienteModel pacienteModel);
+
+	boolean authenticate(String username, String password);
 }
