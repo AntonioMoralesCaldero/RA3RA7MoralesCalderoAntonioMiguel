@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class MedicoModel {
 	
-    private int id;
+    private Integer id;
     private String nombre;
     private String apellidos;
     private int edad;
@@ -14,7 +14,7 @@ public class MedicoModel {
     private String password;
     private EspecialidadModel especialidad;
     
-	public MedicoModel(int id, String nombre, String apellidos, int edad, Date fechaalta, String username,
+	public MedicoModel(Integer id, String nombre, String apellidos, int edad, Date fechaalta, String username,
 			String password, EspecialidadModel especialidad) {
 		super();
 		this.id = id;
@@ -31,11 +31,11 @@ public class MedicoModel {
 		
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

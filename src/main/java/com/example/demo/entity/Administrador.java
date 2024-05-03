@@ -18,10 +18,32 @@ public class Administrador {
     @Column(name = "username", length = 30)
     private String username;
 
-    @Column(name = "password", length = 30)
+    @Column(name = "password")
     private String password;
 
 	public void setPassword(String encode) {
 		
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
+	
 }

@@ -10,8 +10,8 @@ public class PacienteModel {
     private String apellidos;
     private int edad;
     private String direccion;
-    private MultipartFile foto;  // Usado para cargar la foto
-    private String fotoFilename; // Usado para guardar el nombre del archivo en la base de datos
+    private MultipartFile foto;
+    private String fotoFilename;
     private String username;
     private String password;
     

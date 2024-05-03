@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Médico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Admin Panel</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminDashboard">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <h2 th:text="${medico.id == null} ? 'Nuevo Médico' : 'Editar Médico'"></h2>
+    <form th:action="@{/medicoDashboard/guardar}" th:object="${medico}" method="post">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" th:field="*{apellidos}" required>
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" th:field="*{username}" required>
+        </div>
+        <!-- Condición para mostrar el campo de contraseña solo para nuevos registros -->
+        <div class="mb-3" th:if="${medico.id == null}">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" required>
+        </div>
+        <div class="mb-3">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edad" th:field="*{edad}" required>
+        </div>
+        <div class="mb-3">
+            <label for="fechaalta" class="form-label">Fecha de Alta</label>
+            <input type="date" class="form-control" id="fechaalta" th:field="*{fechaalta}" required>
+        </div>
+        <div class="mb-3">
+            <label for="especialidad" class="form-label">Especialidad</label>
+            <select class="form-select" id="especialidad" th:field="*{especialidad.id}">
+                <option th:each="esp : ${especialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
