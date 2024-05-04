@@ -1,3 +1,4 @@
+//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class MedicoController {
     @GetMapping("/nuevo")
     public String mostrarFormularioDeNuevoMedico(Model model) {
         Medico medico = new Medico();
-        medico.setEspecialidad(new Especialidad()); // Inicializa Especialidad aquí si es necesario
+        medico.setEspecialidad(new Especialidad());
         model.addAttribute("medico", medico);
-        model.addAttribute("especialidades", especialidadService.findAll()); // Asume que tienes un servicio que retorna todas las especialidades
+        model.addAttribute("especialidades", especialidadService.findAll());
         return "formularioMedico";
     }
 
@@ -52,7 +53,6 @@ public class MedicoController {
         }
 
         if (medico.getId() != null && medico.getId() > 0) {
-            // Es una edición
             Medico existingMedico = medicoService.findById(medico.getId());
             if (existingMedico != null) {
                 existingMedico.setNombre(medico.getNombre());
@@ -60,14 +60,19 @@ public class MedicoController {
                 existingMedico.setEdad(medico.getEdad());
                 existingMedico.setFechaalta(medico.getFechaalta());
                 existingMedico.setEspecialidad(medico.getEspecialidad());
+                
+                existingMedico.setUsername(medico.getUsername());
+
                 medicoService.save(existingMedico);
             }
         } else {
             medico.setPassword(passwordEncoder.encode(medico.getPassword()));
             medicoService.save(medico);
         }
+
         return "redirect:/medicoDashboard/";
     }
+
 
 
 

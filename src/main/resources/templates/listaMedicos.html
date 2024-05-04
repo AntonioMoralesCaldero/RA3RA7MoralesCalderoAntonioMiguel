@@ -32,6 +32,7 @@
                 <th>Edad</th>
                 <th>Fecha de Alta</th>
                 <th>Especialidad</th>
+                <th>Nombre de Usuario</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -42,9 +43,10 @@
                 <td th:text="${medico.edad}"></td>
                 <td th:text="${#dates.format(medico.fechaalta, 'dd-MM-yyyy')}"></td>
                 <td th:text="${medico.especialidad.nombre}"></td>
+                <td th:text="${medico.username}"></td>
                 <td>
-					<a th:href="@{/medicoDashboard/editar/{id}(id=${medico.id})}" class="btn btn-primary">Editar</a>
-					<a th:href="@{/medicoDashboard/eliminar/{id}(id=${medico.id})}" class="btn btn-danger" onclick="return confirm('¿Está seguro de querer eliminar este médico?');">Eliminar</a>
+                    <a th:href="@{/medicoDashboard/editar/{id}(id=${medico.id})}" class="btn btn-primary">Editar</a>
+                    <a th:href="@{/medicoDashboard/eliminar/{id}(id=${medico.id})}" class="btn btn-danger" onclick="return confirm('¿Está seguro de querer eliminar este médico?');">Eliminar</a>
                 </td>
             </tr>
         </tbody>

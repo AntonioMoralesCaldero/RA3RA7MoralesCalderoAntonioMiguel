@@ -36,72 +36,78 @@ public class Paciente {
     @Column(name = "password")
     private String password;
 
-	public int getId() {
-		return id;
-	}
+    @Column(name = "is_active")
+    private boolean isActive = true;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getApellidos() {
-		return apellidos;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+    public String getApellidos() {
+        return apellidos;
+    }
 
-	public int getEdad() {
-		return edad;
-	}
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
+    public int getEdad() {
+        return edad;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public String getFoto() {
-		return foto;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+    public String getFoto() {
+        return foto;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    
+    public boolean isActive() {
+        return isActive;
+    }
 
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 }

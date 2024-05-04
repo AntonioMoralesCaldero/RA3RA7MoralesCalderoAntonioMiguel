@@ -1,3 +1,4 @@
+//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.controller;
 
 import com.example.demo.model.PacienteModel;
@@ -39,7 +40,9 @@ public class LoginController {
             MultipartFile file = pacienteModel.getFoto();
             if (file != null && !file.isEmpty()) {
                 String filename = savePhoto(file);
-                pacienteModel.setFotoFilename(filename);  // Guarda el nombre del archivo
+                pacienteModel.setFotoFilename(filename);
+                
+                System.out.printf("Setting fotoFilename: %s%n", pacienteModel.getFotoFilename());
             }
 
             pacienteService.registrar(pacienteModel);
@@ -50,6 +53,7 @@ public class LoginController {
             return "redirect:/auth/register";
         }
     }
+
 
     @GetMapping("/auth/login")
     public String showLoginForm(@RequestParam(value = "error", required = false) String error,
@@ -72,7 +76,6 @@ public class LoginController {
         Files.write(path, file.getBytes());
         return filename;
     }
-
 
 
 }

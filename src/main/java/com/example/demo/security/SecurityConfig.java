@@ -1,3 +1,4 @@
+//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "/index", "/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/", "/index", "/auth/login", "/auth/register", "/imgs/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/auth/login")
@@ -47,6 +48,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

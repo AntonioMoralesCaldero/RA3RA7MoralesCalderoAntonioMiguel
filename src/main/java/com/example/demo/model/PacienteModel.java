@@ -10,14 +10,14 @@ public class PacienteModel {
     private String apellidos;
     private int edad;
     private String direccion;
-    private MultipartFile foto;
+    private MultipartFile foto; 
     private String fotoFilename;
     private String username;
     private String password;
-    
+    private boolean isActive;
+
     public PacienteModel(int id, String nombre, String apellidos, int edad, String direccion, MultipartFile foto,
-            String username, String password) {
-        super();
+                         String username, String password, boolean isActive) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -26,10 +26,11 @@ public class PacienteModel {
         this.foto = foto;
         this.username = username;
         this.password = password;
+        this.isActive = isActive;
     }
 
     public PacienteModel() {
-        
+        this.isActive = true;
     }
 
     public int getId() {
@@ -104,10 +105,20 @@ public class PacienteModel {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
-                + ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username=" + username + ", password=" + password
-                + "]";
+    public boolean isActive() {
+        return isActive;
     }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+	@Override
+	public String toString() {
+		return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
+				+ ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username="
+				+ username + ", password=" + password + ", isActive=" + isActive + "]";
+	}
+    
 }
+
