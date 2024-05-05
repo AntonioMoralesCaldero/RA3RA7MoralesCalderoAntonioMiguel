@@ -20,8 +20,8 @@ public class Medicamento {
     @Column(name = "descripcion", length = 100)
     private String descripcion;
 
-    @Column(name = "receta", length = 1)
-    private String receta;
+    @Column(name = "receta")
+    private boolean receta;
 
     @Column(name = "precio")
     private float precio;
@@ -29,19 +29,53 @@ public class Medicamento {
     @Column(name = "stock")
     private int stock;
 
-    public String getReceta() {
-        return receta;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setReceta(String receta) {
-        if (recetaValida(receta)) {
-            this.receta = receta;
-        } else {
-            throw new IllegalArgumentException("Valor de receta no válido");
-        }
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    private boolean recetaValida(String receta) {
-        return receta != null && (receta.equals("s") || receta.equals("n"));
-    }
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public boolean getReceta() {
+		return receta;
+	}
+
+	public void setReceta(boolean receta) {
+		this.receta = receta;
+	}
+    
+    
 }

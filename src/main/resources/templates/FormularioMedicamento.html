@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Formulario de Medicamentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Formulario de Medicamentos</h1>
+    <form th:action="@{/medicamentoDashboard/guardar}" th:object="${medicamento}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" th:field="*{nombre}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" th:field="*{descripcion}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="receta">Requiere Receta</label>
+            <input type="checkbox" th:field="*{receta}" class="form-check-input">
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio</label>
+            <input type="number" th:field="*{precio}" class="form-control" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="stock">Stock</label>
+            <input type="number" th:field="*{stock}" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

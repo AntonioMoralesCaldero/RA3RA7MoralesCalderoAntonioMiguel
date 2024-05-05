@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Lista de Especialidades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Lista de Especialidades</h1>
+    <a href="/especialidades/nuevo" class="btn btn-primary">Nueva Especialidad</a>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="especialidad : ${especialidades}">
+            <td th:text="${especialidad.id}"></td>
+            <td th:text="${especialidad.nombre}"></td>
+            <td>
+                <a th:href="@{/especialidades/editar/{id}(id=${especialidad.id})}" class="btn btn-warning">Editar</a>
+                <a th:href="@{/especialidades/eliminar/{id}(id=${especialidad.id})}" class="btn btn-danger"
+                   onclick="return confirm('¿Estás seguro de que deseas eliminar esta especialidad?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

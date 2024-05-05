@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Lista de Medicamentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Lista de Medicamentos</h1>
+    <a href="/medicamentoDashboard/nuevo" class="btn btn-primary">Nuevo Medicamento</a>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Requiere Receta</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="medicamento : ${medicamentos}">
+            <td th:text="${medicamento.id}"></td>
+            <td th:text="${medicamento.nombre}"></td>
+            <td th:text="${medicamento.descripcion}"></td>
+            <td>
+                <span th:if="${medicamento.receta}">
+                    <i class="fas fa-prescription"></i> Con receta
+                </span>
+                <span th:if="${!medicamento.receta}">
+                    <i class="fas fa-shopping-bag"></i> Venta libre
+                </span>
+            </td>
+            <td th:text="${medicamento.precio}"></td>
+            <td th:text="${medicamento.stock}"></td>
+            <td>
+                <a th:href="@{/medicamentoDashboard/editar/{id}(id=${medicamento.id})}" class="btn btn-warning">Editar</a>
+                <a th:href="@{/medicamentoDashboard/eliminar/{id}(id=${medicamento.id})}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

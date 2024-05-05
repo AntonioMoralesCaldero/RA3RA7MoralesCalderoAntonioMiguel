@@ -18,4 +18,18 @@ public class EspecialidadServiceImpl implements EspecialidadService {
     public List<Especialidad> findAll() {
         return especialidadRepository.findAll();
     }
+    @Override
+    public Especialidad findById(int id) {
+        return especialidadRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void save(Especialidad especialidad) {
+        especialidadRepository.save(especialidad);
+    }
+
+    @Override
+    public void delete(int id) {
+        especialidadRepository.deleteById(id);
+    }
 }

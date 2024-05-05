@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface EspecialidadService {
     List<Especialidad> findAll();
+    Especialidad findById(int id);
+    void save(Especialidad especialidad);
+    void delete(int id);
+    
 }

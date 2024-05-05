@@ -5,24 +5,17 @@ public class EspecialidadModel {
     private int id;
     private String nombre;
 
-    public enum TipoEspecialidad {
-        MEDICO_DE_FAMILIA,
-        DIGESTIVO,
-        NEUROLOGO,
-        DERMATOLOGO,
-        TRAUMATOLOGO
+    public EspecialidadModel() {
+    	
     }
+    
+    public EspecialidadModel(int id, String nombre) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+	}
 
-    public static boolean esEspecialidadValida(String nombreEspecialidad) {
-        for (TipoEspecialidad tipo : TipoEspecialidad.values()) {
-            if (tipo.name().equalsIgnoreCase(nombreEspecialidad)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int getId() {
+	public int getId() {
         return id;
     }
 
@@ -35,10 +28,12 @@ public class EspecialidadModel {
     }
 
     public void setNombre(String nombre) {
-        if (esEspecialidadValida(nombre)) {
-            this.nombre = nombre;
-        } else {
-            throw new IllegalArgumentException("Especialidad no válida");
-        }
+        this.nombre = nombre;
     }
+
+	@Override
+	public String toString() {
+		return "EspecialidadModel [id=" + id + ", nombre=" + nombre + "]";
+	}
+    
 }
