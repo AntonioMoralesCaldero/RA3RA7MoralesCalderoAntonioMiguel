@@ -5,11 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #004085;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link, .username, .logout-button {
+            color: #fff;
+        }
+        .navbar-custom .nav-link:hover, .logout-button:hover {
+            background-color: #002752;
+        }
+        .logout-button {
+            background-color: #dc3545;
+            border: none;
+            padding: 5px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #bd2130;
+        }
+        .username {
+            margin-right: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+            background-color: #004085;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
         <a class="navbar-brand" href="#">Admin Panel</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,8 +70,13 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/especialidades/">Gestión de Especialidades</a>
 				</li>
-
             </ul>
+            <div class="ml-auto d-flex align-items-center">
+                <span class="username">admin</span>
+				<form th:action="@{/logout}" method="post" style="margin-bottom: 0;">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
@@ -40,6 +84,10 @@
 <div class="container mt-5">
     <h1>Bienvenido al Panel de Administración</h1>
     <p>Administra el sistema eficientemente desde aquí.</p>
+</div>
+
+<div class="footer">
+    <p>Centro Médico © 2024. Todos los Derechos Reservados.</p>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

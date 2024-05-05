@@ -32,6 +32,11 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/", "/index", "/auth/login", "/auth/register", "/imgs/**").permitAll()
+                .requestMatchers("/adminDashboard/**").hasRole("ADMIN")
+                .requestMatchers("/medicoDashboard/**").hasRole("ADMIN")
+                .requestMatchers("/medicamentoDashboard/**").hasRole("ADMIN")
+                .requestMatchers("/especialidades/**").hasRole("ADMIN")
+                .requestMatchers("/perfil").hasRole("PACIENTE")
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/auth/login")
@@ -44,10 +49,13 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/index")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll());
+                .permitAll())
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/access-denied"));
 
         return http.build();
     }
+
 
 
     @Autowired
