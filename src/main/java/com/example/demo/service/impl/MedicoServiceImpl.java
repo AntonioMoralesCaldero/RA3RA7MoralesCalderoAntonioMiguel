@@ -34,4 +34,9 @@ public class MedicoServiceImpl implements MedicoService {
     public void delete(Medico medico) {
         medicoRepository.delete(medico);
     }
+    
+    @Override
+    public List<Medico> findByEspecialidad(int especialidadId) {
+        return medicoRepository.findByEspecialidadId(especialidadId);
+    }
 }

@@ -10,4 +10,5 @@ public interface MedicoService {
     Medico save(Medico medico);
     Medico findById(Integer id);
     void delete(Medico medico);
+    List<Medico> findByEspecialidad(int especialidadId);
 }
