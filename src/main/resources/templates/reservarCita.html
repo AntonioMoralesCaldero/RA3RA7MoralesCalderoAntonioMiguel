@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Cita</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reservar Cita</h2>
+        <form id="reservaCitaForm" th:action="@{/citas/nueva}" method="post">
+            <div class="mb-3">
+                <label for="especialidad" class="form-label">Especialidad:</label>
+				<select id="especialidad" name="especialidadId" class="form-select" required 
+				        onchange="window.location.href='/citas/nueva?especialidadId=' + this.value;">
+				    <option value="">Seleccione una especialidad</option>
+				    <th:block th:each="especialidad : ${especialidades}">
+				        <option th:value="${especialidad.id}" th:text="${especialidad.nombre}"
+				                th:selected="${especialidadSeleccionada != null and especialidad.id.equals(especialidadSeleccionada)}"></option>
+				    </th:block>
+				</select>
+            </div>
+            <div class="mb-3">
+                <label for="idMedico" class="form-label">Médico:</label>
+                <select id="idMedico" name="idMedico" class="form-select" required>
+                    <option value="">Seleccione un médico</option>
+                    <th:block th:each="medico : ${medicos}">
+                        <option th:value="${medico.id}" th:text="${medico.nombre} + ' ' + ${medico.apellidos}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Reservar Cita</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function updateMedicos(especialidadId) {
+            const form = document.getElementById('reservaCitaForm');
+            const actionUrl = form.getAttribute('action');
+            window.location = `${actionUrl}?especialidadId=${especialidadId}`;
+        }
+    </script>
+</body>
+</html>

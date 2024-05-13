@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .requestMatchers("/medicamentoDashboard/**").hasRole("ADMIN")
                 .requestMatchers("/especialidades/**").hasRole("ADMIN")
                 .requestMatchers("/perfil").hasRole("PACIENTE")
+                .requestMatchers("/citas/**").hasRole("PACIENTE")
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/auth/login")

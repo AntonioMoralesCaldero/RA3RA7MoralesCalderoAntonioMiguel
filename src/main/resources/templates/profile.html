@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authenticated User Dashboard</title>
+    <title>Perfil del Usuario Autenticado</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { 
@@ -60,6 +60,17 @@
             padding: 0;
             cursor: pointer;
         }
+        .btn-citas {
+            background-color: #28a745; /* Bootstrap green */
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .btn-citas:hover {
+            background-color: #218838; /* Darker green */
+        }
     </style>
 </head>
 <body>
@@ -73,13 +84,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link btn-citas" href="/citas/nueva">Reservar Cita</a>
                     </li>
                     <li class="nav-item user-info">
                         <span class="username" th:text="${username}">Antonio</span>
@@ -93,12 +101,12 @@
     </nav>
 
     <div class="container mt-5">
-        <h1>Welcome, <span th:text="${username}">Antonio</span>!</h1>
-        <p>This is your user dashboard. Here you can manage your profile, check updates, and more.</p>
+        <h1>Bienvenido, <span th:text="${username}">Antonio</span>!</h1>
+        <p>Este es tu panel de usuario. Aquí puedes gestionar tu perfil, revisar actualizaciones y mucho más.</p>
     </div>
 
     <div class="footer">
-        <p>Centro Médico © 2024. All Rights Reserved.</p>
+        <p>Centro Médico © 2024. Todos los Derechos Reservados.</p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

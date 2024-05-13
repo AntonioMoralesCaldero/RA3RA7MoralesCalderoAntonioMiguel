@@ -147,5 +147,9 @@ public class PacienteServiceImpl implements PacienteService {
     public void deleteById(int id) {
         pacienteRepository.deleteById(id);
     }
+    
+    public Paciente findByUsername(String username) {
+        return pacienteRepository.findByUsername(username);
+    }
 
 }
