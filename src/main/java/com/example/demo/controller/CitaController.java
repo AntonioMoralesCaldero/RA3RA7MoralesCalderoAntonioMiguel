@@ -61,24 +61,26 @@ public class CitaController {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date fecha = dateFormat.parse(fechaStr + " " + horaStr);
 
+            if (!citaService.isSlotAvailable(idMedico, fecha) || !citaService.canBookForDay(idMedico, fecha)) {
+                return "citasFail";  // Redirigir a una página de error de disponibilidad
+            }
+
             String username = principal.getName();
             Paciente paciente = pacienteService.findByUsername(username);
             Medico medico = medicoService.findById(idMedico);
-
-            if (citaService.contarCitasPorFechaHora(idMedico, fecha) < 3) {
-                Cita cita = new Cita();
-                cita.setPaciente(paciente);
-                cita.setMedico(medico);
-                cita.setFecha(fecha);
-                citaService.save(cita);
-                return "redirect:/perfil";
-            } else {
-                return "citasFail";
-            }
+            
+            Cita cita = new Cita();
+            cita.setPaciente(paciente);
+            cita.setMedico(medico);
+            cita.setFecha(fecha);
+            citaService.save(cita);
+            return "redirect:/perfil";  // Redirigir a la página de perfil
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return "error";  // Página de error general
         }
     }
+
+
 
 }

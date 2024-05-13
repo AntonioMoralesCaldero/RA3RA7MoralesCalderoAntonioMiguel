@@ -8,6 +8,7 @@ import com.example.demo.service.CitaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,31 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public Cita findById(int id) {
         return citaRepository.findById(id).orElse(null);
+    }
+    
+    @Override
+    public boolean isSlotAvailable(int medicoId, Date fecha) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        cal.add(Calendar.MINUTE, -30);  // 30 minutos antes de la hora de la cita
+        Date startTime = cal.getTime();
+        cal.add(Calendar.MINUTE, 60);  // Duración de la cita + 30 minutos después
+        Date endTime = cal.getTime();
+        return citaRepository.countCitasByTimeSlot(medicoId, startTime, endTime) == 0;
+    }
+
+    @Override
+    public boolean canBookForDay(int medicoId, Date fecha) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date startOfDay = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        Date endOfDay = cal.getTime();
+        return citaRepository.countCitasByDay(medicoId, startOfDay, endOfDay) < 3;
     }
 }
 
