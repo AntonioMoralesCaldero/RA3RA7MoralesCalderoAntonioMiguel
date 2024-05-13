@@ -23,8 +23,8 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public int contarCitasPorFecha(int idMedico, Date fecha) {
-        return citaRepository.countByMedicoIdAndFecha(idMedico, fecha);
+    public int contarCitasPorFechaHora(int idMedico, Date fechaHora) {
+        return citaRepository.countByMedicoIdAndFecha(idMedico, fechaHora);
     }
 
     @Override

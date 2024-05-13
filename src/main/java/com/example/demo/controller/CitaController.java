@@ -17,6 +17,7 @@ import com.example.demo.service.MedicoService;
 import com.example.demo.service.PacienteService;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -53,23 +54,30 @@ public class CitaController {
 
     @PostMapping("/citas/nueva")
     public String reservarCita(@RequestParam("idMedico") int idMedico,
-                               @RequestParam("fecha") Date fecha,
+                               @RequestParam("fecha") String fechaStr,
+                               @RequestParam("hora") String horaStr,
                                Principal principal) {
-        String username = principal.getName();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date fecha = dateFormat.parse(fechaStr + " " + horaStr);
 
-        Paciente paciente = pacienteService.findByUsername(username);
+            String username = principal.getName();
+            Paciente paciente = pacienteService.findByUsername(username);
+            Medico medico = medicoService.findById(idMedico);
 
-        Medico medico = medicoService.findById(idMedico);
-
-        if (citaService.contarCitasPorFecha(idMedico, fecha) < 3) {
-            Cita cita = new Cita();
-            cita.setPaciente(paciente);
-            cita.setMedico(medico);
-            cita.setFecha(fecha);
-            citaService.save(cita);
-            return "redirect:/perfil";
-        } else {
-            return "redirect:/citas/fail";
+            if (citaService.contarCitasPorFechaHora(idMedico, fecha) < 3) {
+                Cita cita = new Cita();
+                cita.setPaciente(paciente);
+                cita.setMedico(medico);
+                cita.setFecha(fecha);
+                citaService.save(cita);
+                return "redirect:/perfil";
+            } else {
+                return "citasFail";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 

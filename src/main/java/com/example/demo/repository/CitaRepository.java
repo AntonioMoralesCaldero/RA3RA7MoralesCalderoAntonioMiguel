@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface CitaRepository extends JpaRepository<Cita, Integer> {
-	int countByMedicoIdAndFecha(int medicoId, Date fecha);
-    List<Cita> findByMedicoIdAndFecha(int medicoId, Date fecha);}
+	int countByMedicoIdAndFecha(int medicoId, Date fechaHora);
+    List<Cita> findByMedicoIdAndFecha(int medicoId, Date fecha);
+
+}
 

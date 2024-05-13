@@ -9,9 +9,10 @@ import java.util.List;
 public interface CitaService {
 
     Cita save(Cita cita);
-    int contarCitasPorFecha(int idMedico, Date fecha);
+    int contarCitasPorFechaHora(int idMedico, Date fechaHora);
     List<Cita> findByMedicoAndDate(int idMedico, Date fecha);
     List<Cita> findAll();
     void deleteById(int id);
     Cita findById(int id);
+    
 }
