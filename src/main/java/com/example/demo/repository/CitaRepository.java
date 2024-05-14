@@ -19,5 +19,9 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
     @Query("SELECT COUNT(c) FROM Cita c WHERE c.medico.id = :medicoId AND c.fecha BETWEEN :startTime AND :endTime")
     int countCitasByTimeSlot(@Param("medicoId") int medicoId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
+    @Query("SELECT c FROM Cita c WHERE c.paciente.id = :pacienteId AND c.fecha < CURRENT_DATE ORDER BY c.fecha DESC")
+    List<Cita> findPastCitasByPacienteId(@Param("pacienteId") int pacienteId);
+
+
 }
 

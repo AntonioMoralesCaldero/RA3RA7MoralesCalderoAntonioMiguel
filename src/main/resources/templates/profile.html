@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,21 +34,34 @@
         }
         .container h1 {
             color: #333;
+            margin-top: 20px;
         }
         .footer {
             text-align: center;
             padding: 10px 0;
-            margin-top: 40px;
             background-color: #004085;
             color: white;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
+        .btn-citas, .btn-history {
+            background-color: #28a745;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .btn-citas:hover, .btn-history:hover {
+            background-color: #218838;
+        }
         .user-info {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             width: 100%;
         }
         .username {
@@ -60,38 +73,27 @@
             padding: 0;
             cursor: pointer;
         }
-        .btn-citas {
-            background-color: #28a745; /* Bootstrap green */
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            color: #fff;
-            text-decoration: none;
-        }
-        .btn-citas:hover {
-            background-color: #218838; /* Darker green */
-        }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="#">Centro Médico</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link btn-citas" href="/citas/nueva">Reservar Cita</a>
                     </li>
-                    <li class="nav-item user-info">
+                    <li class="nav-item">
+                        <a class="nav-link btn-history" href="/citas/historico">Historial de Citas</a>
+                    </li>
+                    <li class="nav-item">
                         <span class="username" th:text="${username}">Antonio</span>
-                        <form th:action="@{/logout}" method="post" style="margin-bottom: 0;">
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
                             <button type="submit" class="logout-button">Logout</button>
                         </form>
                     </li>
@@ -100,7 +102,7 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container">
         <h1>Bienvenido, <span th:text="${username}">Antonio</span>!</h1>
         <p>Este es tu panel de usuario. Aquí puedes gestionar tu perfil, revisar actualizaciones y mucho más.</p>
     </div>

@@ -52,9 +52,9 @@ public class CitaServiceImpl implements CitaService {
     public boolean isSlotAvailable(int medicoId, Date fecha) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
-        cal.add(Calendar.MINUTE, -30);  // 30 minutos antes de la hora de la cita
+        cal.add(Calendar.MINUTE, -30);
         Date startTime = cal.getTime();
-        cal.add(Calendar.MINUTE, 60);  // Duración de la cita + 30 minutos después
+        cal.add(Calendar.MINUTE, 60);
         Date endTime = cal.getTime();
         return citaRepository.countCitasByTimeSlot(medicoId, startTime, endTime) == 0;
     }
@@ -71,6 +71,11 @@ public class CitaServiceImpl implements CitaService {
         cal.add(Calendar.DAY_OF_MONTH, 1);
         Date endOfDay = cal.getTime();
         return citaRepository.countCitasByDay(medicoId, startOfDay, endOfDay) < 3;
+    }
+    
+    @Override
+    public List<Cita> findAllCitasByPacienteId(int pacienteId) {
+        return citaRepository.findPastCitasByPacienteId(pacienteId);
     }
 }
 

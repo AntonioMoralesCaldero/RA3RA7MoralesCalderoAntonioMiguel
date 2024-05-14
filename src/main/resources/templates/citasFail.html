@@ -5,12 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fallo en la Reserva de Cita</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container text-center">
         <h2>No se pudo reservar la cita</h2>
-        <p>El médico ya tiene el máximo de citas para este dia, o bien está en medio de una cita. Por favor, intenta con otro horario o día.</p>
+        <div class="alert alert-warning" role="alert">
+            <strong>Error al reservar la cita:</strong>
+            <span id="errorMensaje">Cargando detalles del error...</span>
+        </div>
         <a href="/citas/nueva" class="btn btn-primary">Intentar de nuevo</a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const reason = params.get('reason');
+
+            let message = "Por favor, intenta con otro horario o día.";
+            if (reason === 'max_citas') {
+                message = "El médico ya tiene el máximo de citas permitidas para este día.";
+            } else if (reason === 'hora_ocupada') {
+                message = "La hora seleccionada ya está reservada. Por favor, elige un horario diferente.";
+            }
+
+            document.getElementById('errorMensaje').textContent = message;
+        });
+    </script>
 </body>
 </html>

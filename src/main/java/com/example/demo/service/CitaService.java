@@ -16,4 +16,6 @@ public interface CitaService {
     Cita findById(int id);
     boolean isSlotAvailable(int medicoId, Date fecha);
     boolean canBookForDay(int medicoId, Date fecha);
+    List<Cita> findAllCitasByPacienteId(int pacienteId);
+
 }

@@ -13,9 +13,13 @@
         .container {
             margin-top: 20px;
         }
-        .btn-primary {
-            width: 100%;
-        }
+		.btn-primary, .btn-secondary {
+			width: 100%;
+			margin-top: 10px;
+		}
+		.btn-secondary {
+			margin-top: 20px;
+		}
     </style>
 </head>
 <body>
@@ -51,6 +55,7 @@
 			    <input type="time" id="hora" name="hora" class="form-control" required>
 			</div>
             <button type="submit" class="btn btn-primary">Reservar Cita</button>
+			<a href="/perfil" class="btn btn-secondary">Volver al Perfil</a>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

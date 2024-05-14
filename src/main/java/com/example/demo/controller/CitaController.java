@@ -1,4 +1,3 @@
-//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Controller
 public class CitaController {
-	
+    
     @Autowired
     private EspecialidadService especialidadService;
     
@@ -44,7 +43,7 @@ public class CitaController {
         if (especialidadId != null) {
             List<Medico> medicos = medicoService.findByEspecialidad(especialidadId);
             model.addAttribute("medicos", medicos);
-            model.addAttribute("especialidadSeleccionada", especialidadId);  // Asegúrate de que este atributo se pasa correctamente
+            model.addAttribute("especialidadSeleccionada", especialidadId);
         } else {
             model.addAttribute("medicos", List.of());
         }
@@ -61,26 +60,54 @@ public class CitaController {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date fecha = dateFormat.parse(fechaStr + " " + horaStr);
 
-            if (!citaService.isSlotAvailable(idMedico, fecha) || !citaService.canBookForDay(idMedico, fecha)) {
-                return "citasFail";  // Redirigir a una página de error de disponibilidad
-            }
-
             String username = principal.getName();
             Paciente paciente = pacienteService.findByUsername(username);
             Medico medico = medicoService.findById(idMedico);
-            
+
+            if (!citaService.isSlotAvailable(idMedico, fecha)) {
+                return "redirect:/citas/fail?reason=hora_ocupada";
+            }
+            if (!citaService.canBookForDay(idMedico, fecha)) {
+                return "redirect:/citas/fail?reason=max_citas";
+            }
+
             Cita cita = new Cita();
             cita.setPaciente(paciente);
             cita.setMedico(medico);
             cita.setFecha(fecha);
             citaService.save(cita);
-            return "redirect:/perfil";  // Redirigir a la página de perfil
+            return "redirect:/perfil";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";  // Página de error general
+            return "error";
         }
     }
-
-
+    
+    @GetMapping("/citas/fail")
+    public String showBookingFailPage(@RequestParam(required = false) String reason, Model model) {
+        if (reason != null) {
+            if ("hora_ocupada".equals(reason)) {
+                model.addAttribute("message", "No se pudo reservar la cita porque el médico ya tiene una cita en esa hora. Por favor, intenta con otra hora.");
+            } else if ("max_citas".equals(reason)) {
+                model.addAttribute("message", "No se pudo reservar la cita porque el médico ya ha alcanzado el número máximo de citas para este día.");
+            } else {
+                model.addAttribute("message", "No se pudo procesar su solicitud. Por favor, intenta de nuevo.");
+            }
+        } else {
+            model.addAttribute("message", "No se proporcionó información específica del error.");
+        }
+        return "citasFail";
+    }
+    
+    @GetMapping("/citas/historico")
+    public String mostrarHistorialCitas(Principal principal, Model model) {
+        String username = principal.getName();
+        Paciente paciente = pacienteService.findByUsername(username);
+        if (paciente != null) {
+            List<Cita> citas = citaService.findAllCitasByPacienteId(paciente.getId());
+            model.addAttribute("citas", citas);
+        }
+        return "historicoCitas";
+    }
 
 }
