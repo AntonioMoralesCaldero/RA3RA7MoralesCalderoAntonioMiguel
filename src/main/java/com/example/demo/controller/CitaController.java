@@ -1,9 +1,12 @@
+//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Cita;
@@ -109,5 +112,54 @@ public class CitaController {
         }
         return "historicoCitas";
     }
+    
+    @GetMapping("/citas/futuras")
+    public String mostrarCitasFuturas(Model model, Principal principal) {
+        String username = principal.getName();
+        List<Cita> citasFuturas = citaService.findFutureCitasByUsername(username);
+        model.addAttribute("citas", citasFuturas);
+        return "citasFuturas";
+    }
+
+    @GetMapping("/citas/modificar/{id}")
+    public String modificarCitaForm(@PathVariable("id") int citaId, Model model) {
+        Cita cita = citaService.findById(citaId);
+        if (cita == null) {
+            model.addAttribute("error", "No se encontró la cita con ID: " + citaId);
+            return "citasFail"; 
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        String fechaFormateada = dateFormat.format(cita.getFecha());
+        model.addAttribute("cita", cita);
+        model.addAttribute("fechaFormateada", fechaFormateada);
+        return "modificarCita";
+    }
+
+
+
+
+    @PostMapping("/citas/modificar/{id}")
+    public String actualizarCita(@PathVariable("id") int citaId, @RequestParam("fecha") String fechaStr, Principal principal, Model model) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date fecha = dateFormat.parse(fechaStr);
+            Cita cita = citaService.findById(citaId);
+            if (cita == null) {
+                model.addAttribute("errorMessage", "No se encontró la cita con ID: " + citaId);
+                return "modificarCita";
+            }
+            cita.setFecha(fecha);
+            citaService.save(cita);
+            return "redirect:/citas/futuras";
+        } catch (ParseException e) {
+            model.addAttribute("errorMessage", "Formato de fecha incorrecto. Por favor, sigue el formato YYYY-MM-DD HH:MM.");
+            return "modificarCita";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al actualizar la cita: " + e.getMessage());
+            return "modificarCita";
+        }
+    }
+
+
 
 }

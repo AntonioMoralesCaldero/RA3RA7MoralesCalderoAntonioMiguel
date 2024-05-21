@@ -21,7 +21,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             response.sendRedirect("/adminDashboard");
         } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_MEDICO"))) {
-            response.sendRedirect("/medicoDashboard");
+            response.sendRedirect("/perfilDeMedicos");
         } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_PACIENTE"))) {
             response.sendRedirect("/perfil");
         } else {

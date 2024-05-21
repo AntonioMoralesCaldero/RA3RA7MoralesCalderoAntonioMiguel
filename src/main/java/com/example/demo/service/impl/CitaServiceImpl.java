@@ -73,9 +73,51 @@ public class CitaServiceImpl implements CitaService {
         return citaRepository.countCitasByDay(medicoId, startOfDay, endOfDay) < 3;
     }
     
-    @Override
     public List<Cita> findAllCitasByPacienteId(int pacienteId) {
-        return citaRepository.findPastCitasByPacienteId(pacienteId);
+        Date now = new Date();
+        return citaRepository.findPastCitasByPacienteId(pacienteId, now);
     }
+    
+    @Override
+    public List<Cita> findFutureCitasByUsername(String username) {
+        return citaRepository.findFutureCitasByUsername(username, new Date());
+    }
+
+    @Override
+    public boolean canModifyCita(int citaId, Date nuevaFecha) {
+        Cita cita = citaRepository.findById(citaId).orElse(null);
+        if (cita != null) {
+            Date currentDate = new Date();
+            long difference = cita.getFecha().getTime() - currentDate.getTime();
+            return difference > 24 * 60 * 60 * 1000;
+        }
+        return false;
+    }
+
+    public void updateCitaFecha(int citaId, Date nuevaFecha) {
+        Cita cita = citaRepository.findById(citaId).orElse(null);
+        if (cita != null) {
+            cita.setFecha(nuevaFecha);
+            citaRepository.save(cita);
+        } else {
+            throw new IllegalArgumentException("Cita no encontrada con ID: " + citaId);
+        }
+    }
+    
+    @Override
+    public List<Cita> findCitasByMedicoAndDate(int medicoId, Date date) {
+        return citaRepository.findByMedicoIdAndFecha(medicoId, date);
+    }
+    
+    @Override
+    public List<Cita> findCitasForMedicoOnDate(int medicoId, Date startOfDay, Date endOfDay) {
+        return citaRepository.findCitasForMedicoOnDate(medicoId, startOfDay, endOfDay);
+    }
+    
+    @Override
+    public List<Cita> findCitasByMedicoAndDateRange(int medicoId, Date startOfDay, Date endOfDay) {
+        return citaRepository.findByMedicoIdAndDateRange(medicoId, startOfDay, endOfDay);
+    }
+
 }
 

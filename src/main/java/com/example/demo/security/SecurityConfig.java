@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/especialidades/**").hasRole("ADMIN")
                 .requestMatchers("/perfil").hasRole("PACIENTE")
                 .requestMatchers("/citas/**").hasRole("PACIENTE")
+                .requestMatchers("/perfilDeMedicos/**").hasRole("MEDICO")
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/auth/login")

@@ -17,5 +17,13 @@ public interface CitaService {
     boolean isSlotAvailable(int medicoId, Date fecha);
     boolean canBookForDay(int medicoId, Date fecha);
     List<Cita> findAllCitasByPacienteId(int pacienteId);
+    List<Cita> findFutureCitasByUsername(String username);
+    boolean canModifyCita(int citaId, Date nuevaFecha);
+    void updateCitaFecha(int citaId, Date nuevaFecha);
+    List<Cita> findCitasByMedicoAndDate(int medicoId, Date date);
+    List<Cita> findCitasForMedicoOnDate(int medicoId, Date startOfDay, Date endOfDay);
+    List<Cita> findCitasByMedicoAndDateRange(int medicoId, Date startOfDay, Date endOfDay);
+
+
 
 }

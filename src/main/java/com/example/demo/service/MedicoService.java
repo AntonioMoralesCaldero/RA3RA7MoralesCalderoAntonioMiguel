@@ -11,4 +11,5 @@ public interface MedicoService {
     Medico findById(Integer id);
     void delete(Medico medico);
     List<Medico> findByEspecialidad(int especialidadId);
+    Medico findByUsername(String username);
 }
