@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface CitaService {
-
     Cita save(Cita cita);
     int contarCitasPorFechaHora(int idMedico, Date fechaHora);
     List<Cita> findByMedicoAndDate(int idMedico, Date fecha);
@@ -23,7 +22,6 @@ public interface CitaService {
     List<Cita> findCitasByMedicoAndDate(int medicoId, Date date);
     List<Cita> findCitasForMedicoOnDate(int medicoId, Date startOfDay, Date endOfDay);
     List<Cita> findCitasByMedicoAndDateRange(int medicoId, Date startOfDay, Date endOfDay);
-
-
-
+    void updateCita(Cita cita);
 }
+

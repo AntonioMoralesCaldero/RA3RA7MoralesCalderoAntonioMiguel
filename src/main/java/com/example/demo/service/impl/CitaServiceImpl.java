@@ -73,6 +73,7 @@ public class CitaServiceImpl implements CitaService {
         return citaRepository.countCitasByDay(medicoId, startOfDay, endOfDay) < 3;
     }
     
+    @Override
     public List<Cita> findAllCitasByPacienteId(int pacienteId) {
         Date now = new Date();
         return citaRepository.findPastCitasByPacienteId(pacienteId, now);
@@ -94,6 +95,7 @@ public class CitaServiceImpl implements CitaService {
         return false;
     }
 
+    @Override
     public void updateCitaFecha(int citaId, Date nuevaFecha) {
         Cita cita = citaRepository.findById(citaId).orElse(null);
         if (cita != null) {
@@ -119,5 +121,8 @@ public class CitaServiceImpl implements CitaService {
         return citaRepository.findByMedicoIdAndDateRange(medicoId, startOfDay, endOfDay);
     }
 
+    @Override
+    public void updateCita(Cita cita) {
+        citaRepository.save(cita);
+    }
 }
-

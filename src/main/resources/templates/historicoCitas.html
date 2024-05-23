@@ -57,7 +57,8 @@
                         <strong>Fecha:</strong> <span th:text="${cita.fecha}">Fecha</span><br>
 						<strong>Médico:</strong> <span th:text="'Dr. ' + ${cita.medico.nombre} + ' ' + ${cita.medico.apellidos}">Nombre del médico</span><br>
                         <strong>Observaciones:</strong> <span th:text="${cita.observaciones}">Observaciones</span>
-                    </li>
+						<strong>Tratamiento:</strong> <span th:text="${cita.tratamiento}">Tratamiento</span>
+					</li>
                 </th:block>
             </ul>
         </div>

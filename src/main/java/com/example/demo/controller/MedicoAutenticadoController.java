@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.service.CitaService;
@@ -84,6 +85,28 @@ public class MedicoAutenticadoController {
         return "medicoindex";
     }
 
+    @GetMapping("/perfilDeMedicos/editarCita")
+    public String editarCita(@RequestParam("id") int id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Medico medico = medicoService.findByUsername(username);
+        
+        Cita cita = citaService.findById(id);
+        model.addAttribute("medico", medico);
+        model.addAttribute("cita", cita);
+        
+        return "editarCita";
+    }
 
 
+    @PostMapping("/perfilDeMedicos/actualizarCita")
+    public String actualizarCita(@RequestParam("id") int id, 
+                                 @RequestParam("observaciones") String observaciones, 
+                                 @RequestParam("tratamiento") String tratamiento) {
+        Cita cita = citaService.findById(id);
+        cita.setObservaciones(observaciones);
+        cita.setTratamiento(tratamiento);
+        citaService.updateCita(cita);
+        return "redirect:/perfilDeMedicos";
+    }
 }

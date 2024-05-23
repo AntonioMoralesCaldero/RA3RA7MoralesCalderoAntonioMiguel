@@ -35,6 +35,9 @@ public class Cita {
 
     @Column(name = "observaciones", length = 200)
     private String observaciones;
+    
+    @Column(name = "tratamiento", length = 200)
+    private String tratamiento;
 
 	public int getId() {
 		return id;
@@ -75,6 +78,14 @@ public class Cita {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
+	
+	public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
     
     
 }
