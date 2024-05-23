@@ -23,5 +23,7 @@ public interface CitaService {
     List<Cita> findCitasForMedicoOnDate(int medicoId, Date startOfDay, Date endOfDay);
     List<Cita> findCitasByMedicoAndDateRange(int medicoId, Date startOfDay, Date endOfDay);
     void updateCita(Cita cita);
+    List<Cita> findCitasByPacienteAndDateRange(int pacienteId, Date startDate, Date endDate);
+
 }
 

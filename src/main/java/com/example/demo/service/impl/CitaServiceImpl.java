@@ -125,4 +125,9 @@ public class CitaServiceImpl implements CitaService {
     public void updateCita(Cita cita) {
         citaRepository.save(cita);
     }
+    
+    @Override
+    public List<Cita> findCitasByPacienteAndDateRange(int pacienteId, Date startDate, Date endDate) {
+        return citaRepository.findCitasByPacienteAndDateRange(pacienteId, startDate, endDate);
+    }
 }

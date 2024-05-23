@@ -47,14 +47,11 @@
             background: #ecf0f1;
             border: 1px solid #bdc3c7;
             margin-top: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        label, input, button {
+        label, input, button, select {
             margin-top: 10px;
         }
-        input, button {
+        input, button, select {
             padding: 10px;
             margin-right: 10px;
         }
@@ -130,15 +127,30 @@
                     <a th:href="@{/perfilDeMedicos/editarCita(id=${cita.id})}" class="btn btn-link">Editar</a>
                 </li>
             </ul>
-            <form action="/perfilDeMedicos/filtrar" method="get">
+            <form action="/perfilDeMedicos" method="get">
                 <label for="fecha">Filtrar citas por fecha:</label>
-                <input type="date" id="fecha" name="fecha" required>
-                <button type="submit" class="btn btn-primary">Buscar Citas</button>
+                <input type="date" id="fecha" name="date" required>
+                <button type="submit">Buscar Citas</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>Seleccione un Paciente para Ver el Historial</h2>
+            <form th:action="@{/perfilDeMedicos/historial}" method="get">
+                <label for="paciente">Paciente:</label>
+                <select id="paciente" name="pacienteId" required>
+                    <option value="" disabled selected>Seleccione un paciente</option>
+                    <th:block th:each="paciente : ${pacientes}">
+                        <option th:value="${paciente.id}" th:text="${paciente.nombre} + ' ' + ${paciente.apellidos}"></option>
+                    </th:block>
+                </select>
+                <label for="startDate">Desde:</label>
+                <input type="date" id="startDate" name="startDate" required>
+                <label for="endDate">Hasta:</label>
+                <input type="date" id="endDate" name="endDate" required>
+                <button type="submit">Ver Historial</button>
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

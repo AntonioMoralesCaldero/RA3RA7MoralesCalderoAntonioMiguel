@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.service.CitaService;
 import com.example.demo.service.MedicoService;
+import com.example.demo.service.PacienteService;
 import com.example.demo.entity.Cita;
 import com.example.demo.entity.Medico;
 
@@ -26,6 +27,9 @@ import java.util.List;
 @Controller
 public class MedicoAutenticadoController {
 
+	@Autowired
+    private PacienteService pacienteService;
+	
     @Autowired
     private MedicoService medicoService;
 
@@ -36,13 +40,12 @@ public class MedicoAutenticadoController {
     public String medicoDashboard(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-
         Medico medico = medicoService.findByUsername(username);
-        Date today = date != null ? date : new Date(); // Usa la fecha proporcionada o la fecha actual si no se proporciona ninguna
+        Date today = date != null ? date : new Date();
         Date startOfDay = getStartOfDay(today);
         Date endOfDay = getEndOfDay(today);
-
         model.addAttribute("medico", medico);
+        model.addAttribute("pacientes", pacienteService.findAll());
         model.addAttribute("citas", citaService.findCitasForMedicoOnDate(medico.getId(), startOfDay, endOfDay));
 
         return "medicoindex";
@@ -108,5 +111,16 @@ public class MedicoAutenticadoController {
         cita.setTratamiento(tratamiento);
         citaService.updateCita(cita);
         return "redirect:/perfilDeMedicos";
+    }
+    
+    @GetMapping("/perfilDeMedicos/historial")
+    public String verHistorial(@RequestParam("pacienteId") int pacienteId,
+                               @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                               @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                               Model model) {
+        List<Cita> citas = citaService.findCitasByPacienteAndDateRange(pacienteId, startDate, endDate);
+        model.addAttribute("citas", citas);
+        model.addAttribute("paciente", pacienteService.findById(pacienteId));
+        return "historialCitas";
     }
 }

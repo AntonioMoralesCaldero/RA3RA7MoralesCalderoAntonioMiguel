@@ -31,6 +31,9 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
 
     @Query("SELECT c FROM Cita c WHERE c.medico.id = :medicoId AND c.fecha >= :startOfDay AND c.fecha <= :endOfDay ORDER BY c.fecha ASC")
     List<Cita> findByMedicoIdAndDateRange(@Param("medicoId") int medicoId, @Param("startOfDay") Date startOfDay, @Param("endOfDay") Date endOfDay);
+    
+    @Query("SELECT c FROM Cita c WHERE c.paciente.id = :pacienteId AND c.fecha BETWEEN :startDate AND :endDate")
+    List<Cita> findCitasByPacienteAndDateRange(@Param("pacienteId") int pacienteId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }
 
