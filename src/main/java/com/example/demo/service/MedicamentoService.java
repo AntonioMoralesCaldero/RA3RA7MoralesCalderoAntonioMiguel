@@ -9,4 +9,5 @@ public interface MedicamentoService {
     Medicamento findById(int id);
     void save(Medicamento medicamento);
     void delete(int id);
+    List<Medicamento> findByNombreContaining(String nombre);
 }

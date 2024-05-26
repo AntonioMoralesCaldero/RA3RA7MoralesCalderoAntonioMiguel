@@ -32,4 +32,9 @@ public class MedicamentoServiceImpl implements MedicamentoService {
     public void delete(int id) {
         medicamentoRepository.deleteById(id);
     }
+    
+    @Override
+    public List<Medicamento> findByNombreContaining(String nombre) {
+        return medicamentoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
 }

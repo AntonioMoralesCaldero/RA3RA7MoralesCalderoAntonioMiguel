@@ -45,7 +45,7 @@
             bottom: 0;
             width: 100%;
         }
-        .btn-citas, .btn-history {
+        .btn-citas, .btn-history, .btn-medicamentos {
             background-color: #28a745;
             border: none;
             padding: 8px 12px;
@@ -55,7 +55,7 @@
             display: inline-block;
             margin-right: 10px;
         }
-        .btn-citas:hover, .btn-history:hover {
+        .btn-citas:hover, .btn-history:hover, .btn-medicamentos:hover {
             background-color: #218838;
         }
         .user-info {
@@ -91,9 +91,12 @@
                     <li class="nav-item">
                         <a class="nav-link btn-history" href="/citas/historico">Historial de Citas</a>
                     </li>
-					<li class="nav-item">
-					    <a class="nav-link btn-history" href="/citas/futuras">Citas Futuras</a>
-					</li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-history" href="/citas/futuras">Citas Futuras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-medicamentos" href="/compras/medicamentos">Comprar Medicamentos</a>
+                    </li>
                     <li class="nav-item">
                         <span class="username" th:text="${username}">Antonio</span>
                         <form th:action="@{/logout}" method="post" style="display: inline;">
