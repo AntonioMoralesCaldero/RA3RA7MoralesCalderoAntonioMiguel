@@ -2,6 +2,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Compra;
+import com.example.demo.entity.CompraMedicamento;
 import com.example.demo.entity.Medicamento;
 import com.example.demo.entity.Paciente;
 import com.example.demo.model.PacienteModel;
@@ -12,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/compras")
@@ -57,36 +58,61 @@ public class CompraController {
 
     @PostMapping("/carrito/comprar")
     public String comprarCarrito(HttpSession session) {
+        System.out.println("Método comprarCarrito iniciado.");
+
         Integer pacienteId = (Integer) session.getAttribute("pacienteId");
         if (pacienteId == null) {
-            return "redirect:/compras/medicamentos";
+            System.out.println("No hay pacienteId en la sesión.");
+            return "redirect:/compras/medicamentos?error=not_logged_in";
         }
 
         PacienteModel pacienteModel = pacienteService.findById(pacienteId);
         if (pacienteModel == null) {
-            return "redirect:/compras/medicamentos";
+            System.out.println("No se encontró el paciente con ID: " + pacienteId);
+            return "redirect:/compras/medicamentos?error=paciente_not_found";
         }
 
         Paciente paciente = convertToEntity(pacienteModel);
 
         List<Medicamento> carrito = (List<Medicamento>) session.getAttribute("carrito");
         if (carrito == null || carrito.isEmpty()) {
-            return "redirect:/compras/medicamentos";
+            System.out.println("El carrito está vacío.");
+            return "redirect:/compras/medicamentos?error=empty_cart";
         }
 
         Compra compra = new Compra();
         compra.setFecha(new Date());
         compra.setPaciente(paciente);
-        float total = 0;
-        for (Medicamento medicamento : carrito) {
-            total += medicamento.getPrecio();
+        compra.setPrecio(carrito.stream().map(Medicamento::getPrecio).reduce(0f, Float::sum));
+        compra.setDispensada(false);
+
+        List<CompraMedicamento> compraMedicamentos = carrito.stream()
+            .map(medicamento -> {
+                CompraMedicamento cm = new CompraMedicamento();
+                cm.setCompra(compra);
+                cm.setMedicamento(medicamento);
+                return cm;
+            }).collect(Collectors.toList());
+
+        compra.setCompraMedicamentos(compraMedicamentos);
+
+        System.out.println("Compra a guardar: " + compra);
+        compraMedicamentos.forEach(cm -> System.out.println("CompraMedicamento: " + cm));
+
+        try {
+            compraService.save(compra);
+            System.out.println("Compra guardada exitosamente.");
+        } catch (Exception e) {
+            System.err.println("Error guardando la compra: " + e.getMessage());
+            e.printStackTrace();
+            return "redirect:/compras/medicamentos?error=save_failed";
         }
-        compra.setPrecio(total);
-        compraService.save(compra);
 
         session.removeAttribute("carrito");
         return "redirect:/compras/historico";
     }
+
+
 
     @GetMapping("/historico")
     public String verHistorico(Model model, HttpSession session) {

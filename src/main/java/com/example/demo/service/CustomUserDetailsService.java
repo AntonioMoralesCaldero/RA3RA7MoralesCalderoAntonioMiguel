@@ -4,7 +4,6 @@ package com.example.demo.service;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,17 +29,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Paciente paciente = pacienteRepository.findByUsername(username);
         if (paciente != null) {
-            return new User(paciente.getUsername(), paciente.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_PACIENTE")));
+            return new CustomUserDetails(paciente.getUsername(), paciente.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_PACIENTE")), paciente.getId());
         }
 
         Medico medico = medicoRepository.findByUsername(username);
         if (medico != null) {
-            return new User(medico.getUsername(), medico.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_MEDICO")));
+            return new CustomUserDetails(medico.getUsername(), medico.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_MEDICO")), medico.getId());
         }
 
         Administrador administrador = administradorRepository.findByUsername(username);
         if (administrador != null) {
-            return new User(administrador.getUsername(), administrador.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+            return new CustomUserDetails(administrador.getUsername(), administrador.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")), administrador.getId());
         }
 
         throw new UsernameNotFoundException("User not found with username: " + username);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Gestión de Medicamentos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -43,53 +43,61 @@
             bottom: 0;
             width: 100%;
         }
+        .container {
+            margin-top: 60px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table thead {
+            background-color: #004085;
+            color: #fff;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, .05);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="#">Admin Panel</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/medicoDashboard/">Gestión de Médicos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/adminDashboard/gestionPacientes">Gestión de Pacientes</a>
-                </li>
-				<li class="nav-item">
-				    <a class="nav-link" href="/medicamentoDashboard/">CRUD de Medicamentos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/especialidades/">Gestión de Especialidades</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/adminDashboard/compras">Gestión de Compras</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/adminDashboard/medicamentos">Gestión de Medicamentos</a>
-				</li>
-            </ul>
-            <div class="ml-auto d-flex align-items-center">
-                <span class="username">admin</span>
-				<form th:action="@{/logout}" method="post" style="margin-bottom: 0;">
-                    <button type="submit" class="logout-button">Logout</button>
-                </form>
-            </div>
-        </div>
     </div>
 </nav>
 
 <div class="container mt-5">
-    <h1>Bienvenido al Panel de Administración</h1>
-    <p>Administra el sistema eficientemente desde aquí.</p>
+    <h1>Gestión de Medicamentos</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Receta</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="medicamento : ${medicamentos}">
+                <td th:text="${medicamento.id}">1</td>
+                <td th:text="${medicamento.nombre}">Paracetamol</td>
+                <td th:text="${medicamento.descripcion}">Para el dolor de cabeza</td>
+                <td th:text="${medicamento.precio}">5.0</td>
+                <td th:text="${medicamento.receta}">false</td>
+                <td th:text="${medicamento.stock}">100</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/adminDashboard" class="btn btn-primary">Volver al Dashboard</a>
 </div>
 
 <div class="footer">

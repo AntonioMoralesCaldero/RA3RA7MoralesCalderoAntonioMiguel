@@ -1,3 +1,4 @@
+//Autor: Antonio Miguel Morales Caldero
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Medicamento;
@@ -36,5 +37,10 @@ public class MedicamentoServiceImpl implements MedicamentoService {
     @Override
     public List<Medicamento> findByNombreContaining(String nombre) {
         return medicamentoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+    
+    @Override
+    public List<Medicamento> findAllOrderByStockAsc() {
+        return medicamentoRepository.findAllByOrderByStockAsc();
     }
 }

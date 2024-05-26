@@ -17,36 +17,34 @@ public class CompraMedicamento {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "idMedicamento")
+    @JoinColumn(name = "id_medicamento")
     private Medicamento medicamento;
 
     @ManyToOne
-    @JoinColumn(name = "idCompra")
+    @JoinColumn(name = "id_compra")
     private Compra compra;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Medicamento getMedicamento() {
-		return medicamento;
-	}
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
 
-	public void setMedicamento(Medicamento medicamento) {
-		this.medicamento = medicamento;
-	}
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
+    }
 
-	public Compra getCompra() {
-		return compra;
-	}
+    public Compra getCompra() {
+        return compra;
+    }
 
-	public void setCompra(Compra compra) {
-		this.compra = compra;
-	}
-    
-    
+    public void setCompra(Compra compra) {
+        this.compra = compra;
+    }
 }

@@ -15,5 +15,6 @@ public interface PacienteService {
     void updatePaciente(int id, PacienteModel pacienteModel);
     void deleteById(int id);
     Paciente findByUsername(String username);
-    
+    PacienteModel login(String username, String password);
+
 }

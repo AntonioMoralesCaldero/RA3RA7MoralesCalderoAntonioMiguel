@@ -151,5 +151,28 @@ public class PacienteServiceImpl implements PacienteService {
     public Paciente findByUsername(String username) {
         return pacienteRepository.findByUsername(username);
     }
+    
+    @Override
+    public PacienteModel login(String username, String password) {
+        Paciente paciente = pacienteRepository.findByUsername(username);
+        if (paciente != null && passwordEncoder.matches(password, paciente.getPassword())) {
+            return convertToModel(paciente);
+        }
+        return null;
+    }
+
+    private PacienteModel convertToModel(Paciente paciente) {
+        PacienteModel model = new PacienteModel();
+        model.setId(paciente.getId());
+        model.setNombre(paciente.getNombre());
+        model.setApellidos(paciente.getApellidos());
+        model.setEdad(paciente.getEdad());
+        model.setDireccion(paciente.getDireccion());
+        model.setFotoFilename(paciente.getFoto());
+        model.setUsername(paciente.getUsername());
+        model.setPassword(paciente.getPassword());
+        model.setActive(paciente.isActive());
+        return model;
+    }
 
 }

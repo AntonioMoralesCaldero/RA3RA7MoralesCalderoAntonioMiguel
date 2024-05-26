@@ -1,8 +1,11 @@
 //Autor: Antonio Miguel Morales Caldero
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,43 +29,61 @@ public class Compra {
     @Column(name = "precio")
     private float precio;
 
+    @Column(name = "dispensada")
+    private boolean dispensada;
+
     @ManyToOne
-    @JoinColumn(name = "idPaciente")
+    @JoinColumn(name = "id_paciente")
     private Paciente paciente;
 
-	public int getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    private List<CompraMedicamento> compraMedicamentos = new ArrayList<>();
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public Date getFecha() {
-		return fecha;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+    public Date getFecha() {
+        return fecha;
+    }
 
-	public float getPrecio() {
-		return precio;
-	}
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
-	public void setPrecio(float precio) {
-		this.precio = precio;
-	}
+    public float getPrecio() {
+        return precio;
+    }
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
 
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-    
-    
+    public boolean isDispensada() {
+        return dispensada;
+    }
+
+    public void setDispensada(boolean dispensada) {
+        this.dispensada = dispensada;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public List<CompraMedicamento> getCompraMedicamentos() {
+        return compraMedicamentos;
+    }
+
+    public void setCompraMedicamentos(List<CompraMedicamento> compraMedicamentos) {
+        this.compraMedicamentos = compraMedicamentos;
+    }
 }
-
-

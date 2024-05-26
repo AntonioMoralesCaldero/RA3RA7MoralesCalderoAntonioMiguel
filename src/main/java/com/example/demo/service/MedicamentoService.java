@@ -10,4 +10,5 @@ public interface MedicamentoService {
     void save(Medicamento medicamento);
     void delete(int id);
     List<Medicamento> findByNombreContaining(String nombre);
+	List<Medicamento> findAllOrderByStockAsc();
 }

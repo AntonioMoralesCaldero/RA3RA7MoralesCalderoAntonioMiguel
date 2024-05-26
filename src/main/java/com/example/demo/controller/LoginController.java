@@ -4,6 +4,8 @@ package com.example.demo.controller;
 import com.example.demo.model.PacienteModel;
 import com.example.demo.service.PacienteService;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,6 +68,18 @@ public class LoginController {
             model.addAttribute("logoutMessage", "Has cerrado sesión correctamente");
         }
         return "login";
+    }
+    
+    @PostMapping("/auth/login")
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, RedirectAttributes flash) {
+        PacienteModel pacienteModel = pacienteService.login(username, password);
+        if (pacienteModel != null) {
+            session.setAttribute("pacienteId", pacienteModel.getId());
+            return "redirect:/compras/medicamentos";
+        } else {
+            flash.addFlashAttribute("errorMessage", "Usuario o contraseña inválido");
+            return "redirect:/auth/login";
+        }
     }
 
     
