@@ -9,6 +9,9 @@
         body {
             background-color: #f4f4f4;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .navbar-custom {
             background-color: #004085;
@@ -36,15 +39,14 @@
         .footer {
             text-align: center;
             padding: 10px 0;
-            margin-top: 40px;
             background-color: #004085;
             color: white;
-            position: fixed;
-            bottom: 0;
             width: 100%;
+            position: relative;
         }
         .container {
-            margin-top: 60px;
+            flex: 1;
+            padding-bottom: 60px;
         }
         .table {
             margin-top: 20px;
@@ -83,6 +85,7 @@
 </nav>
 
 <div class="container mt-5">
+    <a href="/adminDashboard" class="btn btn-primary mb-3">Volver al Dashboard</a>
     <h1>Gestión de Compras</h1>
     <table class="table table-striped">
         <thead>
@@ -108,7 +111,6 @@
         </tr>
         </tbody>
     </table>
-    <a href="/adminDashboard" class="btn btn-primary">Volver al Dashboard</a>
 </div>
 
 <div class="footer">
