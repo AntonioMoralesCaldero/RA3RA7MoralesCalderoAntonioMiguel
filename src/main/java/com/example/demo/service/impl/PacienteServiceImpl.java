@@ -130,9 +130,25 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public List<Paciente> findAllOrderByCitasEspecialidad(int especialidadId) {
-        return pacienteRepository.findAllOrderByCitasEspecialidad(especialidadId);
+    public List<PacienteModel> findAllOrderByCitasEspecialidad(int especialidadId) {
+        List<Paciente> pacientes = pacienteRepository.findAllOrderByCitasEspecialidad(especialidadId);
+        List<PacienteModel> pacienteModels = new ArrayList<>();
+
+        for (Paciente paciente : pacientes) {
+            PacienteModel model = convertToModel(paciente);
+            model.setNumeroCitas((long) paciente.getCitas().size());
+            pacienteModels.add(model);
+        }
+
+        pacienteModels.sort((p1, p2) -> p2.getNumeroCitas().compareTo(p1.getNumeroCitas()));
+
+        return pacienteModels;
     }
+
+
+
+
+
 
     private PacienteModel convertToModel(Paciente paciente) {
         PacienteModel model = new PacienteModel();

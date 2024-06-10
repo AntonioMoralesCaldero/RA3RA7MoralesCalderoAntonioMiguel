@@ -148,11 +148,13 @@ public class AdminController {
         return totalGasto;
     }
 
-    @GetMapping("/estadisticas/especialidad")
-    public String verPacientesPorEspecialidad(@RequestParam("especialidadId") int especialidadId, Model model) {
-        model.addAttribute("pacientesPorCitas", pacienteService.findAllOrderByCitasEspecialidad(especialidadId));
+    @GetMapping("/adminDashboard/estadisticas/especialidad")
+    public String verPacientesPorEspecialidad(@RequestParam int especialidadId, Model model) {
+        List<PacienteModel> pacientesPorCitas = pacienteService.findAllOrderByCitasEspecialidad(especialidadId);
+        model.addAttribute("pacientesPorCitas", pacientesPorCitas);
         model.addAttribute("especialidad", especialidadService.findById(especialidadId));
         return "estadisticasEspecialidad";
     }
+
 
 }

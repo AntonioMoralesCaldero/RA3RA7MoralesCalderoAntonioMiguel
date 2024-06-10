@@ -17,5 +17,5 @@ public interface PacienteService {
     Paciente findByUsername(String username);
     PacienteModel login(String username, String password);
     List<PacienteModel> findAllOrderByGastoDesc();
-    List<Paciente> findAllOrderByCitasEspecialidad(int especialidadId);
+    List<PacienteModel> findAllOrderByCitasEspecialidad(int especialidadId);
 }

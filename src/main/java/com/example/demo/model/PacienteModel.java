@@ -6,19 +6,20 @@ import java.util.List;
 import com.example.demo.entity.Compra;
 
 public class PacienteModel {
-    
+
     private int id;
     private String nombre;
     private String apellidos;
     private int edad;
     private String direccion;
-    private MultipartFile foto; 
+    private MultipartFile foto;
     private String fotoFilename;
     private String username;
     private String password;
     private boolean isActive;
     private Double totalGasto;
     private List<Compra> compras;
+    private Long numeroCitas;
 
     public PacienteModel(int id, String nombre, String apellidos, int edad, String direccion, MultipartFile foto,
                          String username, String password, boolean isActive) {
@@ -135,11 +136,19 @@ public class PacienteModel {
         this.compras = compras;
     }
 
+    public Long getNumeroCitas() {
+        return numeroCitas;
+    }
+
+    public void setNumeroCitas(Long numeroCitas) {
+        this.numeroCitas = numeroCitas;
+    }
+
     @Override
     public String toString() {
         return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
                 + ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username="
                 + username + ", password=" + password + ", isActive=" + isActive + ", totalGasto=" + totalGasto
-                + ", compras=" + compras + "]";
+                + ", compras=" + compras + ", numeroCitas=" + numeroCitas + "]";
     }
 }
