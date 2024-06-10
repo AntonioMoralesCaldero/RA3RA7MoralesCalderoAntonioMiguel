@@ -2,6 +2,8 @@
 package com.example.demo.model;
 
 import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
+import com.example.demo.entity.Compra;
 
 public class PacienteModel {
     
@@ -15,6 +17,8 @@ public class PacienteModel {
     private String username;
     private String password;
     private boolean isActive;
+    private Double totalGasto;
+    private List<Compra> compras;
 
     public PacienteModel(int id, String nombre, String apellidos, int edad, String direccion, MultipartFile foto,
                          String username, String password, boolean isActive) {
@@ -27,10 +31,12 @@ public class PacienteModel {
         this.username = username;
         this.password = password;
         this.isActive = isActive;
+        this.totalGasto = 0.0;
     }
 
     public PacienteModel() {
         this.isActive = true;
+        this.totalGasto = 0.0;
     }
 
     public int getId() {
@@ -113,12 +119,27 @@ public class PacienteModel {
         this.isActive = isActive;
     }
 
-	@Override
-	public String toString() {
-		return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
-				+ ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username="
-				+ username + ", password=" + password + ", isActive=" + isActive + "]";
-	}
-    
-}
+    public Double getTotalGasto() {
+        return totalGasto;
+    }
 
+    public void setTotalGasto(Double totalGasto) {
+        this.totalGasto = totalGasto;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    @Override
+    public String toString() {
+        return "PacienteModel [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad
+                + ", direccion=" + direccion + ", foto=" + foto + ", fotoFilename=" + fotoFilename + ", username="
+                + username + ", password=" + password + ", isActive=" + isActive + ", totalGasto=" + totalGasto
+                + ", compras=" + compras + "]";
+    }
+}

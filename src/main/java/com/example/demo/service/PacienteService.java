@@ -16,5 +16,6 @@ public interface PacienteService {
     void deleteById(int id);
     Paciente findByUsername(String username);
     PacienteModel login(String username, String password);
-
+    List<PacienteModel> findAllOrderByGastoDesc();
+    List<Paciente> findAllOrderByCitasEspecialidad(int especialidadId);
 }

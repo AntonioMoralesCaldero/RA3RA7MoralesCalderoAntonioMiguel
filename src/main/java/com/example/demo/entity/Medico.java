@@ -2,17 +2,9 @@
 package com.example.demo.entity;
 
 import java.util.Date;
-
+import java.util.List;
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "medico")
@@ -44,70 +36,89 @@ public class Medico {
     @JoinColumn(name = "idEspecialidad")
     private Especialidad especialidad;
 
-	public Integer getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "medico")
+    private List<Cita> citas;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Transient
+    private Long numeroCitas;
 
-	public String getNombre() {
-		return nombre;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getApellidos() {
-		return apellidos;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public int getEdad() {
-		return edad;
-	}
+    public String getApellidos() {
+        return apellidos;
+    }
 
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
-	public Date getFechaalta() {
-		return fechaalta;
-	}
+    public int getEdad() {
+        return edad;
+    }
 
-	public void setFechaalta(Date fechaalta) {
-		this.fechaalta = fechaalta;
-	}
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public Date getFechaalta() {
+        return fechaalta;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setFechaalta(Date fechaalta) {
+        this.fechaalta = fechaalta;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public Especialidad getEspecialidad() {
-		return especialidad;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setEspecialidad(Especialidad especialidad) {
-		this.especialidad = especialidad;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	
-	
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
+
+    public Long getNumeroCitas() {
+        return (long) (citas != null ? citas.size() : 0);
+    }
+
+    public void setNumeroCitas(Long numeroCitas) {
+        this.numeroCitas = numeroCitas;
+    }
 }

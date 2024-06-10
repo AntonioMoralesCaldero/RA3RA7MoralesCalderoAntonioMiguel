@@ -119,11 +119,12 @@
 
     <div class="container">
         <h1>Bienvenido, Dr. <span th:text="${medico.nombre}">Medico</span></h1>
+        
         <div>
             <h2>Sus citas para hoy:</h2>
             <ul>
                 <li th:each="cita : ${citas}">
-                    <span th:text="${cita.fecha}"></span>
+                    <span th:text="${#dates.format(cita.fecha, 'yyyy-MM-dd HH:mm')}"></span>
                     <a th:href="@{/perfilDeMedicos/editarCita(id=${cita.id})}" class="btn btn-link">Editar</a>
                 </li>
             </ul>
@@ -132,6 +133,25 @@
                 <input type="date" id="fecha" name="date" required>
                 <button type="submit">Buscar Citas</button>
             </form>
+        </div>
+        
+        <div>
+            <h2>Filtrar citas por rango de fechas:</h2>
+            <form th:action="@{/perfilDeMedicos/filtrarPorRangoFechas}" method="get">
+                <label for="startDate">Desde:</label>
+                <input type="date" id="startDate" name="startDate" required>
+                <label for="endDate">Hasta:</label>
+                <input type="date" id="endDate" name="endDate" required>
+                <button type="submit">Filtrar</button>
+            </form>
+            
+            <h2>Citas filtradas por rango de fechas:</h2>
+            <ul>
+                <li th:each="cita : ${citasFiltradas}">
+                    <span th:text="${#dates.format(cita.fecha, 'yyyy-MM-dd HH:mm')}"></span>
+                    <a th:href="@{/perfilDeMedicos/editarCita(id=${cita.id})}" class="btn btn-link">Editar</a>
+                </li>
+            </ul>
         </div>
 
         <div>

@@ -2,18 +2,28 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Medico;
+import com.example.demo.model.MedicoModel;
 import com.example.demo.repository.MedicoRepository;
 import com.example.demo.service.MedicoService;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MedicoServiceImpl implements MedicoService {
 
+	private final MedicoRepository medicoRepository;
+    private final ModelMapper modelMapper;
+
     @Autowired
-    private MedicoRepository medicoRepository;
+    public MedicoServiceImpl(MedicoRepository medicoRepository, ModelMapper modelMapper) {
+        this.medicoRepository = medicoRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public List<Medico> findAll() {
@@ -43,5 +53,17 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     public Medico findByUsername(String username) {
         return medicoRepository.findByUsername(username);
+    }
+    
+    @Override
+    public List<MedicoModel> findAllOrderByCitasDesc() {
+        return medicoRepository.findAll().stream()
+            .sorted((m1, m2) -> Integer.compare(m2.getCitas().size(), m1.getCitas().size()))
+            .map(medico -> {
+                MedicoModel model = modelMapper.map(medico, MedicoModel.class);
+                model.setNumeroCitas((long) medico.getCitas().size());
+                return model;
+            })
+            .collect(Collectors.toList());
     }
 }

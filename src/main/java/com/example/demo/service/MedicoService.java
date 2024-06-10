@@ -2,6 +2,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Medico;
+import com.example.demo.model.MedicoModel;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface MedicoService {
     void delete(Medico medico);
     List<Medico> findByEspecialidad(int especialidadId);
     Medico findByUsername(String username);
+    List<MedicoModel> findAllOrderByCitasDesc();
+
 }

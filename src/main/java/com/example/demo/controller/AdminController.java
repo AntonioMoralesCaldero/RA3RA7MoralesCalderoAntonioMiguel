@@ -1,12 +1,14 @@
 //Autor: Antonio Miguel Morales Caldero
 package com.example.demo.controller;
 
+import com.example.demo.service.PacienteService;
+import com.example.demo.service.CompraService;
+import com.example.demo.service.MedicoService;
+import com.example.demo.service.EspecialidadService;
+import com.example.demo.service.MedicamentoService;
 import com.example.demo.entity.Compra;
 import com.example.demo.entity.Medicamento;
 import com.example.demo.model.PacienteModel;
-import com.example.demo.service.CompraService;
-import com.example.demo.service.MedicamentoService;
-import com.example.demo.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +27,24 @@ public class AdminController {
 
     @Autowired
     private PacienteService pacienteService;
-    
+
     @Autowired
     private CompraService compraService;
 
     @Autowired
     private MedicamentoService medicamentoService;
 
+    @Autowired
+    private MedicoService medicoService;
+
+    @Autowired
+    private EspecialidadService especialidadService;
+
     @GetMapping("/adminDashboard")
     public String adminDashboard(Model model) {
         return "adminDashboard";
     }
-    
+
     @GetMapping("/adminDashboard/gestionPacientes")
     public String gestionPacientes(Model model) {
         List<PacienteModel> pacientes = pacienteService.findAll();
@@ -61,7 +69,6 @@ public class AdminController {
     public String actualizarPaciente(@PathVariable int id,
                                      @ModelAttribute PacienteModel pacienteModel,
                                      @RequestParam("foto") MultipartFile file) {
-        
         if (!file.isEmpty()) {
             try {
                 String originalFilename = file.getOriginalFilename();
@@ -80,7 +87,6 @@ public class AdminController {
         if (existingPaciente != null) {
             existingPaciente.setDireccion(pacienteModel.getDireccion());
             existingPaciente.setUsername(pacienteModel.getUsername());
-
             existingPaciente.setNombre(pacienteModel.getNombre());
             existingPaciente.setApellidos(pacienteModel.getApellidos());
             existingPaciente.setEdad(pacienteModel.getEdad());
@@ -95,13 +101,12 @@ public class AdminController {
         return "redirect:/adminDashboard/gestionPacientes";
     }
 
-
     @PostMapping("/adminDashboard/eliminarPaciente/{id}")
     public String eliminarPaciente(@PathVariable int id) {
         pacienteService.deleteById(id);
         return "redirect:/adminDashboard/gestionPacientes";
     }
-    
+
     @GetMapping("/adminDashboard/compras")
     public String verCompras(Model model) {
         model.addAttribute("compras", compraService.findAll());
@@ -120,4 +125,34 @@ public class AdminController {
         model.addAttribute("medicamentos", medicamentos);
         return "gestionMedicamentos";
     }
+
+    @GetMapping("/adminDashboard/estadisticas")
+    public String verEstadisticas(Model model) {
+        List<PacienteModel> pacientesPorGasto = pacienteService.findAllOrderByGastoDesc();
+        for (PacienteModel paciente : pacientesPorGasto) {
+            paciente.setTotalGasto(calculaTotalGasto(paciente));
+        }
+        model.addAttribute("pacientesPorGasto", pacientesPorGasto);
+        model.addAttribute("especialidades", especialidadService.findAll());
+        model.addAttribute("medicosPorCitas", medicoService.findAllOrderByCitasDesc());
+        return "estadisticas";
+    }
+
+    private Double calculaTotalGasto(PacienteModel paciente) {
+        double totalGasto = 0.0;
+        for (Compra compra : paciente.getCompras()) {
+            if (compra.isDispensada()) {
+                totalGasto += compra.getPrecio();
+            }
+        }
+        return totalGasto;
+    }
+
+    @GetMapping("/estadisticas/especialidad")
+    public String verPacientesPorEspecialidad(@RequestParam("especialidadId") int especialidadId, Model model) {
+        model.addAttribute("pacientesPorCitas", pacienteService.findAllOrderByCitasEspecialidad(especialidadId));
+        model.addAttribute("especialidad", especialidadService.findById(especialidadId));
+        return "estadisticasEspecialidad";
+    }
+
 }

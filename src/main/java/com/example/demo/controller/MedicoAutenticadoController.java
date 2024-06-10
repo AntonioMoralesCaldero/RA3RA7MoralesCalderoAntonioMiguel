@@ -123,4 +123,28 @@ public class MedicoAutenticadoController {
         model.addAttribute("paciente", pacienteService.findById(pacienteId));
         return "historialCitas";
     }
+    
+    @GetMapping("/perfilDeMedicos/filtrarPorRangoFechas")
+    public String filtrarCitasPorRangoFechas(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                                             Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Medico medico = medicoService.findByUsername(username);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(endDate);
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        Date adjustedEndDate = cal.getTime();
+
+        List<Cita> citas = citaService.findCitasByMedicoAndDateRange(medico.getId(), startDate, adjustedEndDate);
+        model.addAttribute("medico", medico);
+        model.addAttribute("citasFiltradas", citas);
+
+        return "medicoindex";
+    }
+
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - Administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .table-custom th, .table-custom td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table-custom th {
+            background-color: #004085;
+            color: white;
+            text-align: left;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background-color: #004085;
+            border-color: #004085;
+        }
+        .btn-primary:hover {
+            background-color: #002752;
+            border-color: #002752;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Estadísticas</h1>
+
+    <h2>Pacientes por Gasto</h2>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Gasto Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="paciente : ${pacientesPorGasto}">
+                <td th:text="${paciente.nombre} + ' ' + ${paciente.apellidos}"></td>
+                <td th:text="${paciente.totalGasto}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Seleccionar Especialidad para Ver Pacientes</h2>
+    <form th:action="@{/adminDashboard/estadisticas/especialidad}" method="get">
+        <select class="form-control" name="especialidadId">
+            <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
+        </select>
+        <button type="submit" class="btn btn-primary">Ver Pacientes</button>
+    </form>
+
+    <h2>Médicos por Número de Citas</h2>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Número de Citas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="medico : ${medicosPorCitas}">
+                <td th:text="${medico.nombre} + ' ' + ${medico.apellidos}"></td>
+                <td th:text="${medico.numeroCitas}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <a href="/adminDashboard" class="btn btn-primary">Volver al Dashboard</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

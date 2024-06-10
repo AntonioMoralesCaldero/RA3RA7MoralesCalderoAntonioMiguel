@@ -39,53 +39,51 @@ public class Cita {
     @Column(name = "tratamiento", length = 200)
     private String tratamiento;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
+    public Paciente getPaciente() {
+        return paciente;
+    }
 
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 
-	public Medico getMedico() {
-		return medico;
-	}
+    public Medico getMedico() {
+        return medico;
+    }
 
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
 
-	public Date getFecha() {
-		return fecha;
-	}
+    public Date getFecha() {
+        return fecha;
+    }
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
-	public String getObservaciones() {
-		return observaciones;
-	}
+    public String getObservaciones() {
+        return observaciones;
+    }
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
-	
-	public String getTratamiento() {
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+    
+    public String getTratamiento() {
         return tratamiento;
     }
 
     public void setTratamiento(String tratamiento) {
         this.tratamiento = tratamiento;
     }
-    
-    
 }

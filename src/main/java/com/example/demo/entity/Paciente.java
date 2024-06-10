@@ -1,12 +1,8 @@
 //Autor: Antonio Miguel Morales Caldero
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "paciente")
@@ -38,6 +34,15 @@ public class Paciente {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Compra> compras;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Cita> citas;
+
+    @Transient
+    private Double totalGasto;
 
     public int getId() {
         return id;
@@ -109,5 +114,29 @@ public class Paciente {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
+
+    public Double getTotalGasto() {
+        return totalGasto;
+    }
+
+    public void setTotalGasto(Double totalGasto) {
+        this.totalGasto = totalGasto;
     }
 }
