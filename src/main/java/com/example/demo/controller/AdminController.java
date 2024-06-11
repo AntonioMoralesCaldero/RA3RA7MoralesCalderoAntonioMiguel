@@ -155,6 +155,4 @@ public class AdminController {
         model.addAttribute("especialidad", especialidadService.findById(especialidadId));
         return "estadisticasEspecialidad";
     }
-
-
 }
