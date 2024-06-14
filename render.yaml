@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: RA3RA7MoralesCalderoAntonioMiguel
+    runtime: docker
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    plan: free
+    repo: https://github.com/AntonioMoralesCaldero/RA3RA7MoralesCalderoAntonioMiguel
+    branch: Entrega3
+    dockerfilePath: Dockerfile
